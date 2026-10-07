@@ -14,7 +14,11 @@ public class Main {
         SchemaInitializer.run();
 
         // 2. Start the HTTP server on port 8080.
-        HttpServer server = HttpServer.create(new InetSocketAddress(4044), 0);
+        int port = Integer.parseInt(
+                System.getenv().getOrDefault("PORT", "4044"));
+
+        HttpServer server = HttpServer.create(
+                new InetSocketAddress("0.0.0.0", port), 0);
 
         // Static frontend - serves web/index.html and any other file placed in web/
         server.createContext("/", new StaticFileHandler("web", "", "index.html"));
