@@ -2,7 +2,7 @@
 # Compiles every .java file into the "out" folder.
 # Run from the project root: ./build.sh
 
-JAR="lib/mysql-connector-j-9.1.0.jar"
+JAR="lib/mysql-connector-j-26.7.0.jar"
 
 if [ ! -f "$JAR" ]; then
   echo "ERROR: $JAR not found."
