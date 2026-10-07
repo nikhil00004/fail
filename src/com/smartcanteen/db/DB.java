@@ -4,35 +4,58 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Opens a JDBC connection to MySQL using plain java.sql (no JPA/Hibernate).
- * Each handler opens a connection with DB.connect(), uses it in a
- * try-with-resources block, and it closes automatically. For a small
- * college project this is simpler and easier to explain than a
- * connection pool.
- *
- * Update DB_URL / DB_USER / DB_PASSWORD to match your own MySQL setup.
- */
 public class DB {
 
+    private static final String DB_HOST =
+            System.getenv().getOrDefault(
+                    "DB_HOST",
+                    "localhost"
+            );
+
+    private static final String DB_PORT =
+            System.getenv().getOrDefault(
+                    "DB_PORT",
+                    "3306"
+            );
+
+    private static final String DB_NAME =
+            System.getenv().getOrDefault(
+                    "DB_NAME",
+                    "smart_canteen_db"
+            );
+
+    private static final String DB_USER =
+            System.getenv().getOrDefault(
+                    "DB_USER",
+                    "root"
+            );
+
+    private static final String DB_PASSWORD =
+            System.getenv().getOrDefault(
+                    "DB_PASSWORD",
+                    ""
+            );
+
     public static final String DB_URL =
-            "jdbc:mysql://localhost:3306/smart_canteen_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC";
-    public static final String DB_USER = "root";
-    public static final String DB_PASSWORD = "Nikhil@0608";
+            "jdbc:mysql://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME
+            + "?sslMode=REQUIRED"
+            + "&allowPublicKeyRetrieval=true"
+            + "&serverTimezone=UTC";
 
     static {
         try {
-            // Loads the MySQL JDBC driver class (mysql-connector-j jar
-            // must be on the classpath - see README for how to add it).
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(
-                    "MySQL JDBC driver not found on classpath. " +
-                    "Download mysql-connector-j and put the jar in the lib/ folder. See README.md.", e);
+                    "MySQL JDBC driver not found on classpath.", e);
         }
     }
 
     public static Connection connect() throws SQLException {
-        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        return DriverManager.getConnection(
+                DB_URL,
+                DB_USER,
+                DB_PASSWORD
+        );
     }
 }
