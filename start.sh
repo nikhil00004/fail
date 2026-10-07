@@ -6,4 +6,4 @@ if [ ! -f "out/com/smartcanteen/Main.class" ]; then
   exit 1
 fi
 
-java -cp "out:lib/mysql-connector-j-9.1.0.jar" com.smartcanteen.Main
+java -cp "out:lib/mysql-connector-j-26.7.0.jar" com.smartcanteen.Main
