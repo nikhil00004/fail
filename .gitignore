@@ -1,6 +1,5 @@
 out/
 uploads/
-lib/*.jar
 sources.txt
 .vscode/
 .idea/
